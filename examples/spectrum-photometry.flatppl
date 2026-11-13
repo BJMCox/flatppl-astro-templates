@@ -1,0 +1,46 @@
+%%%
+# Synthetic spectrum and photon photometry
+
+Two supplied spectra in W m^-2 m^-1 per unit strength on an observed-frame
+grid. Strengths are independent physical amplitudes. This is a likelihood
+query, with no implicit prior or optimizer.
+%%%
+flatppl_compat = "0.1"
+astro = load_module("../main.flatppl")
+templates = load_module(
+  "https://raw.githubusercontent.com/BJMCox/flatppl-stats-templates/314b0ced8ccd5ce320888cd643c3188c2510ba56/main.flatppl",
+)
+% Wavelength samples in m, rectangular quadrature widths in m.
+wavelengths = [0.0000004, 0.0000005, 0.0000006]
+quadrature_weights = [0.0000001, 0.0000001, 0.0000001]
+% Rows are wavelength bins; columns are emission components.
+flux_templates = array(
+  [0.000000000001, 0.000000000002, 0.000000000002, 0.000000000001, 0.000000000001, 0.000000000003],
+  [3, 2],
+  [1, 2],
+)
+strengths = elementof(cartpow(nonnegreals, 2))
+flux_lambda = templates.combine(flux_templates, strengths)
+extinction_magnitudes = [0.2, 0.1, 0.05]
+transmission = astro.dust_transmission(extinction_magnitudes)
+attenuated_flux = flux_lambda .* transmission
+% Two passbands: effective areas in m^2 including throughput.
+effective_areas = array([0.8, 0.5, 0.0, 0.0, 0.3, 0.7], [2, 3], [1, 2])
+exposure = 100.0
+planck_constant = 0.000000000000000000000000000000000662607015
+speed_of_light = 299792458.0
+% Each response entry converts an energy density into a photon count density.
+response[.band, .bin] := divide(
+  exposure * effective_areas[.band, .bin] * wavelengths[.bin],
+  planck_constant * speed_of_light,
+)
+source_counts = templates.project(response, attenuated_flux, quadrature_weights)
+background_counts = [1.0, 2.0]
+expected_counts = source_counts .+ background_counts
+counts ~ Poisson.(expected_counts)
+counts_data = [70, 90]
+observation_law = lawof(counts)
+loglikelihood = logdensityof(observation_law, counts_data)
+% Explicit compiled ABI: one [2] input; [3], [2], [2], scalar outputs.
+inputs = strengths
+outputs = (attenuated_flux, source_counts, expected_counts, loglikelihood)

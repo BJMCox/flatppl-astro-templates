@@ -1,0 +1,45 @@
+%%%
+# Runtime physical operator query
+
+x = [redshift, luminosity_distance_m, extinction_magnitudes, strength].
+The caller supplies z > -1, distance > 0, extinction >= 0, strength >= 0.
+The output concatenates coordinates, densities, transmission, band results,
+and sky density. The two independent toy luminosity densities use numerical
+scale 1e-9 per strength, in W/m for L_lambda and W/Hz for L_nu.
+%%%
+flatppl_compat = "0.1"
+astro = load_module("../main.flatppl")
+x = elementof(cartpow(reals, 4))
+rest_wavelength = astro.redshift_wavelength([0.0000004, 0.0000005, 0.0000006], x[1])
+rest_frequency = astro.redshift_frequency(
+  [300000000000000.0, 400000000000000.0, 500000000000000.0],
+  x[1],
+)
+flux_lambda = astro.redshift_flux_lambda(0.000000001 * x[4] .* [2.0, 3.0, 1.0], x[1], x[2])
+flux_nu = astro.redshift_flux_nu(0.000000001 * x[4] .* [2.0, 3.0, 1.0], x[1], x[2])
+transmission = astro.dust_transmission(x[3])
+photon_count = astro.photon_band_counts(
+  [0.0000004, 0.0000005, 0.0000006],
+  flux_lambda .* transmission,
+  [0.8, 0.5, 0.7],
+  [0.0000001, 0.0000001, 0.0000001],
+  100.0,
+  0.000000000000000000000000000000000662607015,
+  299792458.0,
+)
+energy_flux = astro.energy_band_flux(
+  flux_lambda,
+  [0.8, 0.5, 0.7],
+  [0.0000001, 0.0000001, 0.0000001],
+)
+sky = astro.normalize_sky([x[4], 2.0, 0.0], [0.1, 0.3, 0.6])
+result = cat(
+  rest_wavelength,
+  rest_frequency,
+  flux_lambda,
+  flux_nu,
+  [transmission, photon_count, energy_flux],
+  sky,
+)
+inputs = x
+outputs = result
