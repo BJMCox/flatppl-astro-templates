@@ -1,0 +1,17 @@
+%%%
+# Astronomy template operators
+
+Physical coordinate changes and quadrature operators. Units and reference
+measures are supplied by the caller; see docs/reference.md.
+%%%
+flatppl_compat = "0.1"
+_spectral = load_module("src/spectral.flatppl")
+_sky = load_module("src/sky.flatppl")
+redshift_wavelength = _spectral.redshift_wavelength
+redshift_flux_lambda = _spectral.redshift_flux_lambda
+redshift_frequency = _spectral.redshift_frequency
+redshift_flux_nu = _spectral.redshift_flux_nu
+dust_transmission = _spectral.dust_transmission
+photon_band_counts = _spectral.photon_band_counts
+energy_band_flux = _spectral.energy_band_flux
+normalize_sky = _sky.normalize_sky

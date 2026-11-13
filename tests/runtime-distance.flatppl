@@ -1,0 +1,15 @@
+%%%
+# SI luminosity-distance range query
+
+x = [L_lambda, L_nu, distance_m, redshift]. At [1e30, 1e15, 1e20, 0],
+both densities are representable in float32 although distance_m^2 is not.
+Outputs: [F_lambda, F_nu]. Domain: positive distance, z > -1, L >= 0.
+%%%
+flatppl_compat = "0.1"
+astro = load_module("../main.flatppl")
+x = elementof(cartpow(reals, 4))
+flux_lambda = astro.redshift_flux_lambda(x[1], x[4], x[3])
+flux_nu = astro.redshift_flux_nu(x[2], x[4], x[3])
+result = [flux_lambda, flux_nu]
+inputs = x
+outputs = result

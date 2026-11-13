@@ -1,0 +1,19 @@
+%%%
+# Numerical units for physical-fit parameters
+
+x = [strength, distance_scale, redshift], with nonnegative strength,
+positive distance_scale and z > -1. Luminosity units are 1e30 W/m for
+L_lambda and 1e15 W/Hz for L_nu; the distance unit is 1e20 m. The library
+receives order-one numerical values. Explicit output scales 1e-10 and
+1e-25 convert the resulting flux units to W/m^2/m and W/m^2/Hz.
+Outputs: [F_lambda, F_nu], with representable float32 fit derivatives
+at [1, 1, 0] and at zero strength.
+%%%
+flatppl_compat = "0.1"
+astro = load_module("../main.flatppl")
+x = elementof(cartpow(reals, 3))
+flux_lambda = 0.0000000001 * astro.redshift_flux_lambda(x[1], x[3], x[2])
+flux_nu = 0.0000000000000000000000001 * astro.redshift_flux_nu(x[1], x[3], x[2])
+result = [flux_lambda, flux_nu]
+inputs = x
+outputs = result

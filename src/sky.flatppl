@@ -1,0 +1,9 @@
+%%%
+# Sky intensity normalization
+
+The caller supplies positive pixel solid angles in steradians and the sky
+frame. Normalization is over the supplied domain, which may be a sky subset.
+%%%
+flatppl_compat = "0.1"
+% Nonnegative intensity to a density per steradian; weighted integral must be positive.
+normalize_sky = (intensity, solid_angles) -> intensity ./ sum(intensity .* solid_angles)

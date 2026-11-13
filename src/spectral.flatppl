@@ -1,0 +1,23 @@
+%%%
+# Spectral coordinates, densities, and passbands
+
+Luminosity densities must already be evaluated at the returned rest
+coordinates. Quadrature weights carry wavelength units exactly once.
+Exponential distance reciprocals avoid squared-distance overflow in values
+and adjoints at astronomical distances expressed in metres.
+%%%
+flatppl_compat = "0.1"
+% Observed wavelength to rest wavelength, with scalar z > -1.
+redshift_wavelength = (wavelength, redshift) -> wavelength ./ (1 + redshift)
+% Rest L_lambda at lambda_obs/(1+z) to observed F_lambda, D_L > 0.
+redshift_flux_lambda = (rest_luminosity_density, redshift, luminosity_distance) -> rest_luminosity_density .* exp(-log(luminosity_distance)) .* exp(-log(luminosity_distance)) ./ (4 * pi * (1 + redshift))
+% Observed frequency to rest frequency, with scalar z > -1.
+redshift_frequency = (frequency, redshift) -> frequency .* (1 + redshift)
+% Rest L_nu at nu_obs*(1+z) to observed F_nu, D_L > 0.
+redshift_flux_nu = (rest_luminosity_density, redshift, luminosity_distance) -> rest_luminosity_density .* exp(-log(luminosity_distance)) .* exp(-log(luminosity_distance)) .* ((1 + redshift) / (4 * pi))
+% Dimensionless transmission for extinction in magnitudes, A >= 0.
+dust_transmission = extinction_magnitudes -> 10 .^ (-0.4 .* extinction_magnitudes)
+% Expected photons; area includes throughput, and flux is already attenuated.
+photon_band_counts = (wavelengths, flux_lambda, effective_area, quadrature_weights, exposure, planck_constant, speed_of_light) -> exposure * sum(wavelengths .* flux_lambda .* effective_area .* quadrature_weights) / (planck_constant * speed_of_light)
+% Energy flux integral through dimensionless transmission, without band averaging.
+energy_band_flux = (flux_lambda, transmission, quadrature_weights) -> sum(flux_lambda .* transmission .* quadrature_weights)
