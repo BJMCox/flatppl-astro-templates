@@ -14,7 +14,7 @@ function walk(importer, text) {
     const resolved = engine.moduleResolve.resolveModulePath(importer, dep);
     if (sources[resolved]) continue;
     let local = resolved;
-    const prefix = 'https://raw.githubusercontent.com/BJMCox/flatppl-stats-templates/';
+    const prefix = 'https://raw.githubusercontent.com/flatppl-community/flatppl-stats-templates/';
     if (resolved.startsWith(prefix) && process.env.FLATPPL_STATS_TEMPLATES_DIR) {
       const relative = resolved.slice(prefix.length).split('/').slice(1).join('/');
       local = path.join(process.env.FLATPPL_STATS_TEMPLATES_DIR, relative);

@@ -3,7 +3,7 @@
 FlatPPL 0.1 operators for redshifted spectral densities, dust attenuation,
 photon and energy passbands, and solid-angle sky normalization.
 
-Run the [posterior example](https://live.flatppl.org/#model=https%3A%2F%2Fraw.githubusercontent.com%2FBJMCox%2Fflatppl-astro-templates%2Fmain%2Fexamples%2Fplayground.flatppl&target=Pi_post) in the live playground. It loads its library modules from GitHub.
+Run the [posterior example](https://live.flatppl.org/#model=https%3A%2F%2Fraw.githubusercontent.com%2Fflatppl-community%2Fflatppl-astro-templates%2Fmain%2Fexamples%2Fplayground.flatppl&target=Pi_post) in the live playground. It loads its library modules from GitHub.
 
 ```flatppl
 astro = load_module("main.flatppl")
@@ -14,7 +14,7 @@ transmission = astro.dust_transmission([0.2, 0.1])
 The [function reference](docs/reference.md) defines units, axes, Jacobians,
 and domains. The [synthetic spectrum/photometry example](examples/spectrum-photometry.flatppl)
 combines supplied physical spectra and projects them into photon counts using
-[flatppl-stats-templates](https://github.com/BJMCox/flatppl-stats-templates).
+[flatppl-stats-templates](https://github.com/flatppl-community/flatppl-stats-templates).
 Its shared dependency is pinned in the example's `load_module` URL.
 
 Every physical input is explicit, including luminosity distance, Planck's

@@ -8,7 +8,7 @@ query, with no implicit prior or optimizer.
 flatppl_compat = "0.1"
 astro = load_module("../main.flatppl")
 templates = load_module(
-  "https://raw.githubusercontent.com/BJMCox/flatppl-stats-templates/314b0ced8ccd5ce320888cd643c3188c2510ba56/main.flatppl",
+  "https://raw.githubusercontent.com/flatppl-community/flatppl-stats-templates/314b0ced8ccd5ce320888cd643c3188c2510ba56/main.flatppl",
 )
 % Wavelength samples in m, rectangular quadrature widths in m.
 wavelengths = [0.0000004, 0.0000005, 0.0000006]

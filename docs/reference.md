@@ -150,7 +150,7 @@ a shape normalization and removes the original integrated strength.
 
 ## Composition and mathematical boundaries
 
-Use [flatppl-stats-templates](https://github.com/BJMCox/flatppl-stats-templates)
+Use [flatppl-stats-templates](https://github.com/flatppl-community/flatppl-stats-templates)
 for template combination, weighted projection, interpolation, and observation
 models. Templates have bins as rows and components as columns `[N,K]`;
 responses are `[M,N]`. Physical strengths need not sum to one. Fixed responses
