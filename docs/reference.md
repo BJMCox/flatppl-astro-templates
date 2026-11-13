@@ -1,4 +1,6 @@
-# Function reference
+# Astronomical templates reference
+
+Library version **0.1** · [Package overview](../README.md)
 
 All arrays are real; matching vectors use the same positional grid. Physical
 densities have declared units per coordinate or solid angle. Positive quadrature

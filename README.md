@@ -1,5 +1,7 @@
 # flatppl-astro-templates
 
+[Function reference](docs/reference.md)
+
 FlatPPL 0.1 operators for redshifted spectral densities, dust attenuation,
 photon and energy passbands, and solid-angle sky normalization.
 
