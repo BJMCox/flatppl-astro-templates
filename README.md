@@ -3,6 +3,8 @@
 FlatPPL 0.1 operators for redshifted spectral densities, dust attenuation,
 photon and energy passbands, and solid-angle sky normalization.
 
+Run the [posterior example](https://live.flatppl.org/#model=https%3A%2F%2Fraw.githubusercontent.com%2FBJMCox%2Fflatppl-astro-templates%2Fmain%2Fexamples%2Fplayground.flatppl&target=Pi_post) in the live playground. It loads its library modules from GitHub.
+
 ```flatppl
 astro = load_module("main.flatppl")
 rest_wavelength = astro.redshift_wavelength([4e-7, 5e-7], 0.2)
