@@ -179,3 +179,26 @@ synthesis model is supplied.
 For strengths `[1.2, 0.7]`, total means are approximately
 `[71.4190276832, 89.9814951027]`, and the log likelihood for `[70, 90]` is
 `-6.22833948179`, including Poisson factorial constants.
+
+## Examples and validation
+
+The [function reference](reference.md) defines units, axes, Jacobians,
+and domains. The [synthetic spectrum/photometry example](../examples/spectrum-photometry.flatppl)
+combines supplied physical spectra and projects them into photon counts using
+[flatppl-stats-templates](https://github.com/flatppl-community/flatppl-stats-templates).
+Its shared dependency is pinned in the example's `load_module` URL.
+
+Every physical input is explicit, including luminosity distance, Planck's
+constant, light speed, quadrature widths, and effective area. Use compatible
+units. The library supplies no cosmology, stellar-population generator, dust
+emission, implicit prior, or density floor. Response losses remain losses.
+
+For local validation with an existing Node and NumPy/SciPy environment:
+
+```sh
+FLATPPL_JS_DIR=/path/to/flatppl-js python tests/check.py /path/to/flatppl-stats-templates
+```
+
+The tests use the JS module loader and independent analytic/NumPy/SciPy
+oracles. [tests/runtime.flatppl](../tests/runtime.flatppl) and the example have
+explicit `inputs` and `outputs` for StableHLO compilation.
